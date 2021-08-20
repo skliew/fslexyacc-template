@@ -1,0 +1,21 @@
+{
+open Parser
+open System
+open FSharp.Text.Lexing
+
+let lexeme = LexBuffer<_>.LexemeString
+
+}
+let digit = ['0'-'9']
+let whitespace = [' ' '\t' ]
+let newline = ('\n' | '\r' '\n')
+
+rule token = parse
+| whitespace     { token lexbuf }
+| newline        { token lexbuf }
+| digit+         { INT (Int32.Parse(lexeme lexbuf)) }
+| '+'            { PLUS }
+| '-'            { MINUS }
+| '*'            { MULTI }
+| '/'            { DIVIDE }
+| eof            { EOF }
